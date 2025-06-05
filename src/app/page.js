@@ -99,13 +99,7 @@ export default function Home() {
             url: "/api/placeholder/400/400",
             caption: "Прогулка в парке",
             date: "2024-02-20",
-          },
-          {
-            id: 3,
-            url: "/api/placeholder/400/400",
-            caption: "Романтический ужин",
-            date: "2024-03-10",
-          },
+          }
         ]);
       }
     };

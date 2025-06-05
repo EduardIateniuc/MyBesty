@@ -70,6 +70,18 @@ export default function Home() {
               caption: "кривляшка...",
               date: "2025-05-31",
             },
+            {
+              id: 8,
+              url: "https://i.imgur.com/YRgNPT5.jpeg",
+              caption: "типо не нравится ей",
+              date: "2025-05-31",
+            },
+            {
+              id: 9,
+              url: "https://i.imgur.com/Nh2NIpk.jpeg",
+              caption: "Обязательно руки нюхать????!?!??!",
+              date: "2025-05-31",
+            },
           ]);
         }
       } catch (error) {

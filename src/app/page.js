@@ -1,6 +1,13 @@
 "use client";
 
-import { Heart, Play, ChevronLeft, ChevronRight, X, Volume2 } from "lucide-react";
+import {
+  Heart,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Volume2,
+} from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 export default function Home() {
@@ -15,6 +22,9 @@ export default function Home() {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [videoEnded, setVideoEnded] = useState(false);
+  // ...existing code...
+  const [soundAlertFadeOut, setSoundAlertFadeOut] = useState(false);
+  // ...existing code...
 
   const audioRef = useRef(null);
 
@@ -99,7 +109,7 @@ export default function Home() {
             url: "/api/placeholder/400/400",
             caption: "Прогулка в парке",
             date: "2024-02-20",
-          }
+          },
         ]);
       }
     };
@@ -128,7 +138,10 @@ export default function Home() {
   }, [isStarted, showAlbum, showNextPage]);
 
   const handleSoundAlertClose = () => {
-    setShowSoundAlert(false);
+    setSoundAlertFadeOut(true);
+    setTimeout(() => {
+      setShowSoundAlert(false);
+    }, 500);
   };
 
   const handleStart = () => {
@@ -192,7 +205,11 @@ export default function Home() {
 
       {/* Sound Alert - iPhone Style */}
       {showSoundAlert && (
-        <div className="fixed inset-0 bg-white bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+        <div
+          className={`fixed inset-0 bg-white bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in ${
+            soundAlertFadeOut ? "opacity-0" : "opacity-100"
+          }`}
+        >
           <div className="bg-white bg-opacity-95 backdrop-blur-xl rounded-3xl p-8 mx-4 max-w-sm w-full shadow-2xl animate-scale-in">
             <div className="text-center space-y-6">
               {/* Sound Icon */}
@@ -201,17 +218,17 @@ export default function Home() {
                   <Volume2 className="w-8 h-8 text-white" />
                 </div>
               </div>
-              
+
               {/* Title */}
               <h3 className="text-xl font-semibold text-gray-900">
                 Включите звук
               </h3>
-              
+
               {/* Message */}
               <p className="text-gray-600 text-base leading-relaxed">
                 Для лучшего восприятия рекомендуем включить звук
               </p>
-              
+
               {/* Button */}
               <button
                 onClick={handleSoundAlertClose}
@@ -220,7 +237,7 @@ export default function Home() {
                 Понятно
               </button>
             </div>
-            
+
             {/* Auto-close progress bar */}
             <div className="mt-4 bg-gray-200 rounded-full h-1 overflow-hidden">
               <div className="bg-pink-500 h-full rounded-full animate-progress"></div>
@@ -237,7 +254,7 @@ export default function Home() {
         <div className="absolute bottom-20 right-20 w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
       </div>
 
-      {!isStarted ? (
+      {!isStarted && !showSoundAlert ? (
         /* Initial Screen */
         <div
           className={`min-h-screen flex flex-col items-center justify-center px-6 transition-all duration-1000 ${
@@ -265,7 +282,7 @@ export default function Home() {
             {/* Date */}
             <div className="space-y-2">
               <h1 className="text-6xl md:text-7xl font-light text-transparent bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 bg-clip-text animate-pulse">
-                6
+                7
               </h1>
               <p className="text-xl md:text-2xl font-light text-gray-700 tracking-wider">
                 JUNE 2025
@@ -445,7 +462,6 @@ export default function Home() {
         /* Next Page */
         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-rose-100 to-amber-100 px-4 py-10 animate-fade-in-slow">
           <div className="text-center space-y-6 backdrop-blur-md bg-white/70 border border-white/60 shadow-2xl rounded-3xl p-8 max-w-lg w-full animate-slide-up-smooth">
-            
             {/* Заголовок */}
             <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-gradient-to-r from-pink-500 via-red-400 to-rose-600 bg-clip-text animate-pulse">
               С Днём рождения, Кира! 🎉
@@ -453,7 +469,8 @@ export default function Home() {
 
             {/* Подзаголовок */}
             <p className="text-base md:text-lg text-gray-800 font-medium leading-relaxed">
-              Ты — удивительная, добрая, светлая девочка, которая делает этот мир красивее просто своим присутствием. 🌟
+              Ты — удивительная, добрая, светлая девочка, которая делает этот
+              мир красивее просто своим присутствием. 🌟
             </p>
 
             <p className="text-lg font-semibold text-rose-600">
@@ -468,14 +485,18 @@ export default function Home() {
               alt="Поздравительная гифка"
               className="w-full h-auto rounded-2xl shadow-lg"
               onError={(e) => {
-                e.target.style.display = 'none';
+                e.target.style.display = "none";
               }}
             />
           </div>
         </div>
       ) : (
         /* Video Screen */
-        <div className={`fixed inset-0 bg-black transition-all duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`fixed inset-0 bg-black transition-all duration-1000 ${
+            videoEnded ? "opacity-0" : "opacity-100"
+          }`}
+        >
           <video
             className="w-full h-full object-cover"
             autoPlay
